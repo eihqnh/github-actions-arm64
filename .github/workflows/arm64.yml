@@ -34,8 +34,15 @@ jobs:
             apt-get install -q -y cmake gcc
 
           run: |
-            df -h
+            echo "Minimal"
             uname -m
-            cmake -B build
-            cmake --build build
-            ctest --test-dir build --preset default -V
+            apt-get update -y 
+            df -h
+            DEBIAN_FRONTEND="noninteractive" TZ="Europe/London" apt-get install -y python curl build-essential unzip git
+            curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y
+            git clone --recurse-submodules https://github.com/denoland/deno.git /deno
+            export PATH="/root/.cargo/bin:${PATH}"
+            cd /deno/
+            rustup target add wasm32-unknown-unknown
+            rustup target add wasm32-wasi
+            cargo build --release --locked 

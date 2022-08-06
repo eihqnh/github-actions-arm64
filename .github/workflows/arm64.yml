@@ -35,7 +35,7 @@ jobs:
 
           run: |
             df -h
-
+            df -h
             cmake -B build
             cmake --build build
             ctest --test-dir build --preset default -V

@@ -34,6 +34,8 @@ jobs:
             apt-get install -q -y cmake gcc
 
           run: |
+            df -h
+
             cmake -B build
             cmake --build build
             ctest --test-dir build --preset default -V

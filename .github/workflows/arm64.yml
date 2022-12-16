@@ -23,7 +23,7 @@ jobs:
           distro: ubuntu20.04
           run: |
             apt-get update -q -y
-            apt-get install -q -y curl gcc maven git
+            apt-get install -q -y curl gcc git
             curl -OL https://github.com/graalvm/graalvm-ce-dev-builds/releases/download/23.0.0-dev-20221215_2038/graalvm-ce-java17-linux-aarch64-dev.tar.gz
             tar -xzvf graalvm-ce-java17-linux-aarch64-dev.tar.gz
             export JAVA_HOME=$(pwd)/graalvm-ce-java17-23.0.0-dev/
@@ -33,5 +33,5 @@ jobs:
             gu install native-image
             git clone https://github.com/apache/maven-mvnd.git
             cd maven-mvnd
-            mvn clean verify -Pnative
+            ./mvnw clean verify -Pnative
             file client/target/mvnd

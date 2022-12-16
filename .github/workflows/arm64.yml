@@ -26,9 +26,14 @@ jobs:
           githubToken: ${{ github.token }}
           install: |
             apt-get update -q -y
-            apt-get install -q -y curl 
+            apt-get install -q -y curl gcc maven
             curl -OL https://github.com/graalvm/graalvm-ce-dev-builds/releases/download/23.0.0-dev-20221215_2038/graalvm-ce-java17-linux-aarch64-dev.tar.gz
             tar -xzvf graalvm-ce-java17-linux-aarch64-dev.tar.gz
+            export JAVA_HOME=$(pwd)/graalvm-ce-java17-linux-aarch64-dev/
+            export PATH=$JAVA_HOME/bin:$PATH
+            gu install native-image
           run: |
-            echo "Minimal"
-            uname -m
+            git clone https://github.com/apache/maven-mvnd.git
+            cd maven-mvnd
+            mvn clean verify -Pnative
+            file client/target/mvnd

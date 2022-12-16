@@ -29,7 +29,8 @@ jobs:
             apt-get install -q -y curl gcc maven
             curl -OL https://github.com/graalvm/graalvm-ce-dev-builds/releases/download/23.0.0-dev-20221215_2038/graalvm-ce-java17-linux-aarch64-dev.tar.gz
             tar -xzvf graalvm-ce-java17-linux-aarch64-dev.tar.gz
-            export JAVA_HOME=$(pwd)/graalvm-ce-java17-linux-aarch64-dev/
+            export JAVA_HOME=$(pwd)/graalvm-ce-java17-23.0.0-dev/
+            echo $JAVA_HOME
             export PATH=$JAVA_HOME/bin:$PATH
             ls $JAVA_HOME/bin/
             gu install native-image

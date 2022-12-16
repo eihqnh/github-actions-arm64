@@ -33,5 +33,6 @@ jobs:
             gu install native-image
             git clone https://github.com/apache/maven-mvnd.git
             cd maven-mvnd
+
             ./mvnw clean verify -Pnative
             file client/target/mvnd

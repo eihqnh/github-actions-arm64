@@ -31,6 +31,7 @@ jobs:
             tar -xzvf graalvm-ce-java17-linux-aarch64-dev.tar.gz
             export JAVA_HOME=$(pwd)/graalvm-ce-java17-linux-aarch64-dev/
             export PATH=$JAVA_HOME/bin:$PATH
+            ls $JAVA_HOME/bin/
             gu install native-image
           run: |
             git clone https://github.com/apache/maven-mvnd.git

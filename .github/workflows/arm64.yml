@@ -1,5 +1,4 @@
 name: arm64
-
 on:
   push:
     paths:
@@ -8,7 +7,6 @@ on:
       - "**.c"
       - ".github/workflows/arm64.yml"
   pull_request:
-
 jobs:
   aarch64:
     # The host should always be Linux
@@ -17,32 +15,20 @@ jobs:
 
     steps:
       - uses: actions/checkout@v2
-
       - uses: uraimo/run-on-arch-action@v2.1.1
         name: Run commands
         id: runcmd
         with:
           arch: aarch64
           distro: ubuntu20.04
-
           # Not required, but speeds up builds by storing container images in
           # a GitHub package registry.
           githubToken: ${{ github.token }}
-
           install: |
             apt-get update -q -y
-            apt-get install -q -y cmake gcc
-
+            apt-get install -q -y curl 
+            curl -OL https://github.com/graalvm/graalvm-ce-dev-builds/releases/download/23.0.0-dev-20221215_2038/graalvm-ce-java17-linux-aarch64-dev.tar.gz
+            tar -xzvf graalvm-ce-java17-linux-aarch64-dev.tar.gz
           run: |
             echo "Minimal"
             uname -m
-            apt-get update -y 
-            df -h
-            DEBIAN_FRONTEND="noninteractive" TZ="Europe/London" apt-get install -y python curl build-essential unzip git
-            curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y
-            git clone --recurse-submodules https://github.com/denoland/deno.git /deno
-            export PATH="/root/.cargo/bin:${PATH}"
-            cd /deno/
-            rustup target add wasm32-unknown-unknown
-            rustup target add wasm32-wasi
-            cargo build --release --locked 

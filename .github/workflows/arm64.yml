@@ -21,10 +21,7 @@ jobs:
         with:
           arch: aarch64
           distro: ubuntu20.04
-          # Not required, but speeds up builds by storing container images in
-          # a GitHub package registry.
-          githubToken: ${{ github.token }}
-          install: |
+          run: |
             apt-get update -q -y
             apt-get install -q -y curl gcc maven
             curl -OL https://github.com/graalvm/graalvm-ce-dev-builds/releases/download/23.0.0-dev-20221215_2038/graalvm-ce-java17-linux-aarch64-dev.tar.gz
@@ -34,7 +31,6 @@ jobs:
             export PATH=$JAVA_HOME/bin:$PATH
             ls $JAVA_HOME/bin/
             gu install native-image
-          run: |
             git clone https://github.com/apache/maven-mvnd.git
             cd maven-mvnd
             mvn clean verify -Pnative
